@@ -1,6 +1,61 @@
-﻿<div class="game-container">
+﻿@using FlappyBird.Blazor.Models
+
+@if (_gameManager == null)
+{
+    <em>Lade...</em>
+}
+else
+{
+    //tabindex="0" wird für die Bindung an das onkeyup-Event benötigt
+<div class="game-container" tabindex="0" @onclick="StartGame" @onkeyup="HandleKeyUp">
+
     <div class="sky">
-        <div class="bird"></div>
+        <Bird Model="_gameManager.Bird" />
     </div>
+    @foreach (var pipe in _gameManager.Pipes)
+    {
+        <Pipe Model="pipe" />
+    }
+    @if (_gameManager.GameState == FlappyBird.Blazor.Enums.GameState.GameOver)
+    {
+        <div class="game-over">Game Over</div>
+    }
     <div class="ground"></div>
 </div>
+}
+
+
+
+@code {
+    private GameManager _gameManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //base.OnInitialized();
+        _gameManager = new GameManager();
+        _gameManager.PropertyChanged += (o, e) => StateHasChanged();
+    }
+
+
+    public void StartGame()
+    {
+        if (_gameManager.GameState != Enums.GameState.Running)
+        {
+            _gameManager.StartNewGame();
+        }
+        else
+        {
+            _gameManager.Bird.Jump();
+        }
+    }
+
+
+    public void HandleKeyUp(KeyboardEventArgs e)
+    {
+        _gameManager.Bird.Jump();
+        if (_gameManager.GameState != Enums.GameState.Running && e.Key == " ")
+        {
+            _gameManager.Bird.Jump();
+        }
+    }
+}

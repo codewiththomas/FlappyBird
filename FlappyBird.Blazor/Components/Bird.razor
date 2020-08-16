@@ -1,0 +1,16 @@
+﻿@using FlappyBird.Blazor.Models
+
+
+<div class="bird" style="@_birdCss"></div>
+
+
+@code {
+    [Parameter] public BirdModel Model { get; set; }
+    string _birdCss => $"bottom: {Model.DistanceFromBottom}px";
+
+
+    protected override void OnParametersSet()
+    {
+        Model.PropertyChanged += (o, e) => StateHasChanged();
+    }
+}
