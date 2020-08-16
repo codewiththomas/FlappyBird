@@ -33,10 +33,14 @@ namespace FlappyBird.Blazor.Models
 
         public bool IsCentered()
         {
+
+            //auch wenn der Vogel eigentlich 60px hat, kürze ich das auf 40.
+            //schließlich ist er nicht quadratisch. 
+
             // half of the game width minus the width of the bird
-            var centerMin = 500 / 2 - 60;
+            var centerMin = 500 / 2 - 40;
             // half of the game width plus half the width of the bird
-            var centerMax = (500 + 60) / 2;
+            var centerMax = (500 + 40) / 2;
             return (DistanceFromLeft > centerMin && DistanceFromLeft < centerMax);
         }
     }

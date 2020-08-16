@@ -96,6 +96,7 @@ namespace FlappyBird.Blazor.Models
         public void StartNewGame()
         {
             Bird.ResetBird();
+            Pipes.Clear();
 
             GameState = GameState.Running;
             MainLoop();
