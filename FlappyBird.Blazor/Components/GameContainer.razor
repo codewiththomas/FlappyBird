@@ -7,21 +7,23 @@
 else
 {
     //tabindex="0" wird für die Bindung an das onkeyup-Event benötigt
-<div class="game-container" tabindex="0" @onclick="StartGame" @onkeyup="HandleKeyUp">
-
-    <div class="sky">
-        <Bird Model="_gameManager.Bird" />
+    <div class="border-left"></div>
+    <div class="game-container" tabindex="0" @onclick="StartGame" @onkeyup="HandleKeyUp">
+        <div class="border-top"></div>
+        <div class="sky">
+            <Bird Model="_gameManager.Bird" />
+        </div>
+        @foreach (var pipe in _gameManager.Pipes)
+        {
+            <Pipe Model="pipe" />
+        }
+        @if (_gameManager.GameState == FlappyBird.Blazor.Enums.GameState.GameOver)
+        {
+            <div class="game-over">Game Over</div>
+        }
+        <div class="ground"></div>
     </div>
-    @foreach (var pipe in _gameManager.Pipes)
-    {
-        <Pipe Model="pipe" />
-    }
-    @if (_gameManager.GameState == FlappyBird.Blazor.Enums.GameState.GameOver)
-    {
-        <div class="game-over">Game Over</div>
-    }
-    <div class="ground"></div>
-</div>
+    <div class="border-right"></div>
 }
 
 
